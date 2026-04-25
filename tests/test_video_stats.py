@@ -121,3 +121,9 @@ class TestGetVideoIds:
             result = client.get_video_ids("PL123")
 
         assert result == ["vid1", "vid2"]
+
+    def test_returns_empty_list_on_failed_request(self, client):
+        with patch.object(client, "_get_json", return_value={}):
+            result = client.get_video_ids("PL123")
+
+        assert result == []
