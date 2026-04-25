@@ -69,3 +69,13 @@ class YoutubeClient:
                 break
 
         return video_ids
+
+    def batch_list(self, video_ids: list, batch_size: int = 50) -> list:
+        """Yields successive chunks of video_ids up to batch_size.
+
+        Args:
+            video_ids: List of YouTube video IDs.
+            batch_size: Max IDs per batch (YouTube API max is 50).
+        """
+        for i in range(0, len(video_ids), batch_size):
+            yield video_ids[i : i + batch_size]
