@@ -160,3 +160,12 @@ class TestBatchList:
 
         assert len(batches) == 1
         assert batches[0] == ids
+
+    def test_splits_into_correct_batches(self, client):
+        ids = [f"vid{i}" for i in range(120)]
+        batches = list(client.batch_list(ids))
+
+        assert len(batches) == 3
+        assert len(batches[0]) == 50
+        assert len(batches[1]) == 50
+        assert len(batches[2]) == 20
