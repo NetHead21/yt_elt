@@ -186,3 +186,39 @@ class TestBatchList:
         batches = list(client.batch_list(ids))
 
         assert len(batches) == 1
+
+
+# ---------------------------------------------------------------------------
+# _extract_video_stats
+# ---------------------------------------------------------------------------
+
+
+class TestExtractVideoStats:
+    def test_extracts_all_fields(self, client):
+        data = {
+            "items": [
+                {
+                    "id": "vid1",
+                    "snippet": {"title": "My Video", "publishedAt": "2024-01-01"},
+                    "contentDetails": {"duration": "PT10M"},
+                    "statistics": {
+                        "viewCount": "1000",
+                        "likeCount": "50",
+                        "commentCount": "10",
+                    },
+                }
+            ]
+        }
+
+        result = client._extract_video_stats(data)
+
+        assert len(result) == 1
+        assert result[0] == {
+            "video_id": "vid1",
+            "title": "My Video",
+            "published_at": "2024-01-01",
+            "duration": "PT10M",
+            "view_count": "1000",
+            "like_count": "50",
+            "comment_count": "10",
+        }
