@@ -79,3 +79,22 @@ class YoutubeClient:
         """
         for i in range(0, len(video_ids), batch_size):
             yield video_ids[i : i + batch_size]
+
+    def _extract_video_stats(self, data: dict) -> list:
+        """Extracts relevant fields from a raw API batch response.
+
+        Args:
+            data: Raw JSON response from the videos endpoint.
+        """
+        return [
+            {
+                "video_id": item["id"],
+                "title": item["snippet"].get("title"),
+                "published_at": item["snippet"].get("publishedAt"),
+                "duration": item["contentDetails"].get("duration"),
+                "view_count": item["statistics"].get("viewCount", 0),
+                "like_count": item["statistics"].get("likeCount", 0),
+                "comment_count": item["statistics"].get("commentCount", 0),
+            }
+            for item in data.get("items", [])
+        ]
