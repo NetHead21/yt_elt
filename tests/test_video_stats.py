@@ -34,3 +34,10 @@ class TestGetJson:
             result = client._get_json("https://example.com")
 
         assert result == {}
+
+    def test_returns_empty_dict_on_connection_error(self, client):
+        with patch("dags.api.video_stats.requests.get") as mock_get:
+            mock_get.side_effect = requests.exceptions.ConnectionError()
+            result = client._get_json("https://example.com")
+
+        assert result == {}
