@@ -240,3 +240,7 @@ class TestExtractVideoStats:
         assert result[0]["view_count"] == 0
         assert result[0]["like_count"] == 0
         assert result[0]["comment_count"] == 0
+
+    def test_returns_empty_list_when_no_items(self, client):
+        result = client._extract_video_stats({"items": []})
+        assert result == []
