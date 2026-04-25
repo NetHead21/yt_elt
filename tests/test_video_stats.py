@@ -65,3 +65,9 @@ class TestGetChannelId:
             result = client.get_channel_id("MrBeast")
 
         assert result == "UC123456"
+
+    def test_returns_none_when_empty_response(self, client):
+        with patch.object(client, "_get_json", return_value={}):
+            result = client.get_channel_id("UnknownChannel")
+
+        assert result is None
