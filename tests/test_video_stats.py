@@ -146,3 +146,17 @@ class TestGetVideoIds:
             second_call_url = mock_get.call_args_list[1][0][0]
 
         assert "abc123" in second_call_url
+
+
+# ---------------------------------------------------------------------------
+# batch_list
+# ---------------------------------------------------------------------------
+
+
+class TestBatchList:
+    def test_single_batch_when_under_limit(self, client):
+        ids = [f"vid{i}" for i in range(10)]
+        batches = list(client.batch_list(ids))
+
+        assert len(batches) == 1
+        assert batches[0] == ids
