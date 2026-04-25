@@ -87,3 +87,23 @@ class TestGetChannelId:
 
         assert "MrBeast" in url
         assert API_KEY in url
+
+
+# ---------------------------------------------------------------------------
+# get_video_ids
+# ---------------------------------------------------------------------------
+
+
+class TestGetVideoIds:
+    def test_returns_video_ids_single_page(self, client):
+        mock_data = {
+            "items": [
+                {"contentDetails": {"videoId": "vid1"}},
+                {"contentDetails": {"videoId": "vid2"}},
+            ]
+        }
+
+        with patch.object(client, "_get_json", return_value=mock_data):
+            result = client.get_video_ids("PL123")
+
+        assert result == ["vid1", "vid2"]
