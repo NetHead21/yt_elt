@@ -244,3 +244,19 @@ class TestExtractVideoStats:
     def test_returns_empty_list_when_no_items(self, client):
         result = client._extract_video_stats({"items": []})
         assert result == []
+
+    def test_extracts_multiple_items(self, client):
+        data = {
+            "items": [
+                {
+                    "id": f"vid{i}",
+                    "snippet": {"title": f"Video {i}", "publishedAt": "2024-01-01"},
+                    "contentDetails": {"duration": "PT1M"},
+                    "statistics": {},
+                }
+                for i in range(3)
+            ]
+        }
+
+        result = client._extract_video_stats(data)
+        assert len(result) == 3
