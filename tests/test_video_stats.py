@@ -127,3 +127,9 @@ class TestGetVideoIds:
             result = client.get_video_ids("PL123")
 
         assert result == []
+
+    def test_returns_empty_list_when_no_items(self, client):
+        with patch.object(client, "_get_json", return_value={"items": []}):
+            result = client.get_video_ids("PL123")
+
+        assert result == []
