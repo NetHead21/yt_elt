@@ -119,3 +119,16 @@ class YoutubeClient:
                 extracted_data += self._extract_video_stats(data)
 
         return extracted_data
+
+
+if __name__ == "__main__":
+    # API_KEY = Variable.get("YOUTUBE_API_KEY")
+    # CHANNEL_HANDLE = Variable.get("MrBeast")
+    # youtube_client = YoutubeClient(API_KEY)
+    # channel_id = youtube_client.get_channel_id(CHANNEL_HANDLE)
+
+    # playlist_id = f"UU{channel_id[2:]}"
+    # video_ids = youtube_client.get_video_ids(playlist_id)
+    # video_stats = youtube_client.get_video_stats(video_ids)
+    # save_to_json(video_stats)
+    pass
