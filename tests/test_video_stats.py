@@ -107,3 +107,17 @@ class TestGetVideoIds:
             result = client.get_video_ids("PL123")
 
         assert result == ["vid1", "vid2"]
+
+    def test_paginates_through_multiple_pages(self, client):
+        page1 = {
+            "items": [{"contentDetails": {"videoId": "vid1"}}],
+            "nextPageToken": "token123",
+        }
+        page2 = {
+            "items": [{"contentDetails": {"videoId": "vid2"}}],
+        }
+
+        with patch.object(client, "_get_json", side_effect=[page1, page2]):
+            result = client.get_video_ids("PL123")
+
+        assert result == ["vid1", "vid2"]
