@@ -289,3 +289,9 @@ class TestGetVideoStats:
 
         assert len(result) == 1
         assert result[0]["video_id"] == "vid1"
+
+    def test_skips_failed_batch(self, client):
+        with patch.object(client, "_get_json", return_value={}):
+            result = client.get_video_stats(["vid1", "vid2"])
+
+        assert result == []
