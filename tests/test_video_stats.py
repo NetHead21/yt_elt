@@ -50,3 +50,18 @@ class TestGetJson:
             result = client._get_json("https://example.com")
 
         assert result == {}
+
+
+# ---------------------------------------------------------------------------
+# get_channel_id
+# ---------------------------------------------------------------------------
+
+
+class TestGetChannelId:
+    def test_returns_channel_id(self, client):
+        mock_data = {"items": [{"id": "UC123456"}]}
+
+        with patch.object(client, "_get_json", return_value=mock_data):
+            result = client.get_channel_id("MrBeast")
+
+        assert result == "UC123456"
