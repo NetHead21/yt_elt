@@ -6,3 +6,8 @@ from dags.api.video_stats import YoutubeClient
 
 
 API_KEY = "fake-api-key"
+
+
+@pytest.fixture
+def client():
+    return YoutubeClient(api_key=API_KEY)
