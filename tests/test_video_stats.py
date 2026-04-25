@@ -222,3 +222,21 @@ class TestExtractVideoStats:
             "like_count": "50",
             "comment_count": "10",
         }
+
+    def test_defaults_counts_to_zero_when_missing(self, client):
+        data = {
+            "items": [
+                {
+                    "id": "vid1",
+                    "snippet": {"title": "My Video", "publishedAt": "2024-01-01"},
+                    "contentDetails": {"duration": "PT5M"},
+                    "statistics": {},
+                }
+            ]
+        }
+
+        result = client._extract_video_stats(data)
+
+        assert result[0]["view_count"] == 0
+        assert result[0]["like_count"] == 0
+        assert result[0]["comment_count"] == 0
