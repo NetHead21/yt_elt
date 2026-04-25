@@ -173,3 +173,10 @@ class TestBatchList:
     def test_empty_list_yields_no_batches(self, client):
         batches = list(client.batch_list([]))
         assert batches == []
+
+    def test_custom_batch_size(self, client):
+        ids = [f"vid{i}" for i in range(10)]
+        batches = list(client.batch_list(ids, batch_size=3))
+
+        assert len(batches) == 4
+        assert len(batches[-1]) == 1
