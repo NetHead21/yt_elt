@@ -98,3 +98,24 @@ class YoutubeClient:
             }
             for item in data.get("items", [])
         ]
+
+    def get_video_stats(self, video_ids: list) -> list:
+        """Fetches stats for a list of video IDs in batches.
+
+        Args:
+            video_ids: List of YouTube video IDs to fetch stats for.
+
+        Returns:
+            List of dicts with keys: video_id, title, published_at,
+            duration, view_count, like_count, comment_count.
+        """
+        extracted_data: list = []
+
+        for batch in self.batch_list(video_ids):
+            batch_ids = ",".join(batch)
+            url = f"https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id={batch_ids}&key={self.api_key}"
+
+            if data := self._get_json(url):
+                extracted_data += self._extract_video_stats(data)
+
+        return extracted_data
