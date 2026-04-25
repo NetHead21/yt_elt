@@ -260,3 +260,32 @@ class TestExtractVideoStats:
 
         result = client._extract_video_stats(data)
         assert len(result) == 3
+
+
+# ---------------------------------------------------------------------------
+# get_video_stats
+# ---------------------------------------------------------------------------
+
+
+class TestGetVideoStats:
+    def test_returns_stats_for_video_ids(self, client):
+        mock_data = {
+            "items": [
+                {
+                    "id": "vid1",
+                    "snippet": {"title": "Test", "publishedAt": "2024-01-01"},
+                    "contentDetails": {"duration": "PT5M"},
+                    "statistics": {
+                        "viewCount": "100",
+                        "likeCount": "10",
+                        "commentCount": "2",
+                    },
+                }
+            ]
+        }
+
+        with patch.object(client, "_get_json", return_value=mock_data):
+            result = client.get_video_stats(["vid1"])
+
+        assert len(result) == 1
+        assert result[0]["video_id"] == "vid1"
