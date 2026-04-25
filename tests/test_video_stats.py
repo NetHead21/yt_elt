@@ -77,3 +77,13 @@ class TestGetChannelId:
             result = client.get_channel_id("MrBeast")
 
         assert result is None
+
+    def test_url_contains_channel_name_and_api_key(self, client):
+        mock_data = {"items": [{"id": "UC123456"}]}
+
+        with patch.object(client, "_get_json", return_value=mock_data) as mock_get:
+            client.get_channel_id("MrBeast")
+            url = mock_get.call_args[0][0]
+
+        assert "MrBeast" in url
+        assert API_KEY in url
