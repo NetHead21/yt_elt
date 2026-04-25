@@ -133,3 +133,16 @@ class TestGetVideoIds:
             result = client.get_video_ids("PL123")
 
         assert result == []
+
+    def test_next_page_url_contains_page_token(self, client):
+        page1 = {
+            "items": [{"contentDetails": {"videoId": "vid1"}}],
+            "nextPageToken": "abc123",
+        }
+        page2 = {"items": [{"contentDetails": {"videoId": "vid2"}}]}
+
+        with patch.object(client, "_get_json", side_effect=[page1, page2]) as mock_get:
+            client.get_video_ids("PL123")
+            second_call_url = mock_get.call_args_list[1][0][0]
+
+        assert "abc123" in second_call_url
