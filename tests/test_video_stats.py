@@ -295,3 +295,7 @@ class TestGetVideoStats:
             result = client.get_video_stats(["vid1", "vid2"])
 
         assert result == []
+
+    def test_returns_empty_list_for_empty_input(self, client):
+        result = client.get_video_stats([])
+        assert result == []
