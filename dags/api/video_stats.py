@@ -30,3 +30,16 @@ class YoutubeClient:
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data: {e}")
             return {}
+
+    def get_channel_id(self, channel_name: str) -> str:
+        """Returns the channel ID for a given channel handle, or None if not found.
+
+        Args:
+            channel_name: YouTube channel handle (e.g. 'MrBeast').
+        """
+        url = f"https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle={channel_name}&key={self.api_key}"
+        data = self._get_json(url)
+        if not data or not data.get("items"):
+            return None
+        channel_id = data["items"][0]["id"]
+        return channel_id
