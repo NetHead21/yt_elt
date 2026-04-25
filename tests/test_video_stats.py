@@ -169,3 +169,7 @@ class TestBatchList:
         assert len(batches[0]) == 50
         assert len(batches[1]) == 50
         assert len(batches[2]) == 20
+
+    def test_empty_list_yields_no_batches(self, client):
+        batches = list(client.batch_list([]))
+        assert batches == []
