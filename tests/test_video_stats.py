@@ -41,3 +41,12 @@ class TestGetJson:
             result = client._get_json("https://example.com")
 
         assert result == {}
+
+    def test_calls_raise_for_status(self, client):
+        mock_response = MagicMock()
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError()
+
+        with patch("dags.api.video_stats.requests.get", return_value=mock_response):
+            result = client._get_json("https://example.com")
+
+        assert result == {}
