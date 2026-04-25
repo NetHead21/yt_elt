@@ -43,3 +43,29 @@ class YoutubeClient:
             return None
         channel_id = data["items"][0]["id"]
         return channel_id
+
+    def get_video_ids(self, playlist_id: str) -> list:
+        """Returns all video IDs in a playlist, paginating through all results.
+
+        Args:
+            playlist_id: YouTube playlist ID (e.g. uploads playlist).
+        """
+        video_ids = []
+        base_url = f"https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults={MAX_RESULTS}&playlistId={playlist_id}&key={self.api_key}"
+
+        url = base_url
+        while True:
+            data = self._get_json(url)
+            if not data:
+                break
+
+            video_ids += [
+                item["contentDetails"]["videoId"] for item in data.get("items", [])
+            ]
+
+            if "nextPageToken" in data:
+                url = f"{base_url}&pageToken={data['nextPageToken']}"
+            else:
+                break
+
+        return video_ids
