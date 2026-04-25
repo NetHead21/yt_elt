@@ -27,3 +27,10 @@ class TestGetJson:
             result = client._get_json("https://example.com")
 
         assert result == {"key": "value"}
+
+    def test_returns_empty_dict_on_http_error(self, client):
+        with patch("dags.api.video_stats.requests.get") as mock_get:
+            mock_get.side_effect = requests.exceptions.HTTPError("404")
+            result = client._get_json("https://example.com")
+
+        assert result == {}
