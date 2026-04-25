@@ -180,3 +180,9 @@ class TestBatchList:
 
         assert len(batches) == 4
         assert len(batches[-1]) == 1
+
+    def test_exact_batch_size_yields_one_batch(self, client):
+        ids = [f"vid{i}" for i in range(50)]
+        batches = list(client.batch_list(ids))
+
+        assert len(batches) == 1
