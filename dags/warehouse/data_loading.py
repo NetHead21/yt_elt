@@ -17,3 +17,15 @@ def load_from_json(input_file: Path) -> list:
     Returns:
         A list of records loaded from the file, or an empty list on failure.
     """
+    if not input_file.exists():
+        logging.error(f"Input file {input_file} does not exists.")
+        return []
+
+    try:
+        with input_file.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        logging.info(f"Data successfully loaded from {input_file}")
+        return data
+    except IOError as e:
+        logging.error(f"Error loading data from {input_file}: {e}")
+        return []
