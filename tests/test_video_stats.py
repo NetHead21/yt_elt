@@ -299,3 +299,20 @@ class TestGetVideoStats:
     def test_returns_empty_list_for_empty_input(self, client):
         result = client.get_video_stats([])
         assert result == []
+
+    def test_accumulates_results_across_batches(self, client):
+        def make_item(vid_id):
+            return {
+                "id": vid_id,
+                "snippet": {"title": vid_id, "publishedAt": "2024-01-01"},
+                "contentDetails": {"duration": "PT1M"},
+                "statistics": {},
+            }
+
+        batch1_data = {"items": [make_item(f"vid{i}") for i in range(50)]}
+        batch2_data = {"items": [make_item(f"vid{i}") for i in range(50, 60)]}
+
+        with patch.object(client, "_get_json", side_effect=[batch1_data, batch2_data]):
+            result = client.get_video_stats([f"vid{i}" for i in range(60)])
+
+        assert len(result) == 60
