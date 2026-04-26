@@ -53,3 +53,11 @@ class TestLoadFromJson:
             result = load_from_json(input_file)
 
         assert result == []
+
+    def test_returns_empty_list_for_empty_json_array(self, tmp_path):
+        input_file = tmp_path / "empty.json"
+        input_file.write_text("[]", encoding="utf-8")
+
+        result = load_from_json(input_file)
+
+        assert result == []
