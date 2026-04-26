@@ -68,3 +68,13 @@ class TestSaveToJson:
         parsed = json.loads(content)
 
         assert isinstance(parsed, list)
+
+    def test_handles_unicode_characters(self, tmp_path):
+        data = [{"title": "日本語タイトル", "video_id": "vid1"}]
+        save_to_json(data, output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        with output_file.open(encoding="utf-8") as f:
+            result = json.load(f)
+
+        assert result[0]["title"] == "日本語タイトル"
