@@ -31,3 +31,12 @@ class TestSaveToJson:
         save_to_json(SAMPLE_DATA, output_dir=output_dir)
 
         assert output_dir.is_dir()
+
+    def test_file_contains_correct_data(self, tmp_path):
+        save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        with output_file.open(encoding="utf-8") as f:
+            result = json.load(f)
+
+        assert result == SAMPLE_DATA
