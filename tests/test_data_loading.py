@@ -87,3 +87,11 @@ class TestLoadFromJson:
             load_from_json(input_file)
 
         assert any("successfully loaded" in msg for msg in caplog.messages)
+
+    def test_logs_error_when_file_not_found(self, tmp_path, caplog):
+        input_file = tmp_path / "nonexistent.json"
+
+        with caplog.at_level(logging.ERROR):
+            load_from_json(input_file)
+
+        assert any("does not exists" in msg for msg in caplog.messages)
