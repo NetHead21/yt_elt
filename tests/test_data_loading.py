@@ -69,3 +69,12 @@ class TestLoadFromJson:
         result = load_from_json(input_file)
 
         assert len(result) == 2
+
+    def test_handles_unicode_characters(self, tmp_path):
+        data = [{"title": "日本語タイトル", "video_id": "abc123"}]
+        input_file = tmp_path / "unicode.json"
+        input_file.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+        result = load_from_json(input_file)
+
+        assert result[0]["title"] == "日本語タイトル"
