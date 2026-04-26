@@ -95,3 +95,13 @@ class TestLoadFromJson:
             load_from_json(input_file)
 
         assert any("does not exists" in msg for msg in caplog.messages)
+
+    def test_logs_error_on_io_error(self, tmp_path, caplog):
+        input_file = tmp_path / "data.json"
+        input_file.write_text(json.dumps(SAMPLE_DATA), encoding="utf-8")
+
+        with patch.object(Path, "open", side_effect=IOError("disk error")):
+            with caplog.at_level(logging.ERROR):
+                load_from_json(input_file)
+
+        assert any("Error loading" in msg for msg in caplog.messages)
