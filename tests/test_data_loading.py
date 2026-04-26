@@ -27,3 +27,13 @@ SAMPLE_DATA = [
         "comment_count": 1500,
     },
 ]
+
+
+class TestLoadFromJson:
+    def test_returns_data_from_valid_file(self, tmp_path):
+        input_file = tmp_path / "data.json"
+        input_file.write_text(json.dumps(SAMPLE_DATA), encoding="utf-8")
+
+        result = load_from_json(input_file)
+
+        assert result == SAMPLE_DATA
