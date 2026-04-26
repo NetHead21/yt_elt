@@ -25,3 +25,9 @@ class TestSaveToJson:
 
         output_file = tmp_path / f"yt_data_{date.today()}.json"
         assert output_file.exists()
+
+    def test_creates_output_directory_if_not_exists(self, tmp_path):
+        output_dir = tmp_path / "new_dir"
+        save_to_json(SAMPLE_DATA, output_dir=output_dir)
+
+        assert output_dir.is_dir()
