@@ -37,3 +37,10 @@ class TestLoadFromJson:
         result = load_from_json(input_file)
 
         assert result == SAMPLE_DATA
+
+    def test_returns_empty_list_when_file_not_found(self, tmp_path):
+        input_file = tmp_path / "nonexistent.json"
+
+        result = load_from_json(input_file)
+
+        assert result == []
