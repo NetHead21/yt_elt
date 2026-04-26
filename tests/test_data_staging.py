@@ -49,3 +49,13 @@ class TestSaveToJson:
             result = json.load(f)
 
         assert result == []
+
+    def test_saves_multiple_records(self, tmp_path):
+        data = SAMPLE_DATA * 5
+        save_to_json(data, output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        with output_file.open(encoding="utf-8") as f:
+            result = json.load(f)
+
+        assert len(result) == 5
