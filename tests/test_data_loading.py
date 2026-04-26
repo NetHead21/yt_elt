@@ -78,3 +78,12 @@ class TestLoadFromJson:
         result = load_from_json(input_file)
 
         assert result[0]["title"] == "日本語タイトル"
+
+    def test_logs_success_on_valid_file(self, tmp_path, caplog):
+        input_file = tmp_path / "data.json"
+        input_file.write_text(json.dumps(SAMPLE_DATA), encoding="utf-8")
+
+        with caplog.at_level(logging.INFO):
+            load_from_json(input_file)
+
+        assert any("successfully loaded" in msg for msg in caplog.messages)
