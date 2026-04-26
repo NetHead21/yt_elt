@@ -17,3 +17,11 @@ SAMPLE_DATA = [
         "comment_count": "10",
     }
 ]
+
+
+class TestSaveToJson:
+    def test_creates_output_file(self, tmp_path):
+        save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        assert output_file.exists()
