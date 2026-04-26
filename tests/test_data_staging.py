@@ -59,3 +59,12 @@ class TestSaveToJson:
             result = json.load(f)
 
         assert len(result) == 5
+
+    def test_file_is_valid_json(self, tmp_path):
+        save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        content = output_file.read_text(encoding="utf-8")
+        parsed = json.loads(content)
+
+        assert isinstance(parsed, list)
