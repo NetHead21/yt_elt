@@ -40,3 +40,12 @@ class TestSaveToJson:
             result = json.load(f)
 
         assert result == SAMPLE_DATA
+
+    def test_saves_empty_list(self, tmp_path):
+        save_to_json([], output_dir=tmp_path)
+
+        output_file = tmp_path / f"yt_data_{date.today()}.json"
+        with output_file.open(encoding="utf-8") as f:
+            result = json.load(f)
+
+        assert result == []
