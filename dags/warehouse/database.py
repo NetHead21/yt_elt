@@ -20,3 +20,12 @@ class PostgresDB:
         self.postgres_conn_id = postgres_conn_id
         self._hook: PostgresHook | None = None
         self.database = database
+
+    @property
+    def hook(self) -> PostgresHook:
+        """Returns a cached PostgresHook instance, creating it on first access."""
+        if self._hook is None:
+            self._hook = PostgresHook(
+                postgres_conn_id=self.postgres_conn_id, database=self.database
+            )
+        return self._hook
