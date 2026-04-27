@@ -33,3 +33,9 @@ class PostgresDB:
     def get_connection(self):
         """Returns a raw psycopg2 connection from the hook."""
         return self.hook.get_conn()
+
+    @contextmanager
+    def get_cursor(self):
+        """Context manager that yields a RealDictCursor, commits on success, rolls back on error."""
+        conn = self.get_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
