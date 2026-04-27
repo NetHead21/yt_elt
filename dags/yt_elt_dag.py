@@ -19,3 +19,8 @@ def yt_elt_dag():
     def get_video_ids(playlist_id: str) -> list:
         client = YoutubeClient(api_key=Variable.get("API_KEY"))
         return client.get_video_ids(playlist_id)
+
+    @task
+    def get_video_stats(video_ids: list) -> list:
+        client = YoutubeClient(api_key=Variable.get("API_KEY"))
+        return client.get_video_stats(video_ids)
