@@ -77,3 +77,20 @@ class PostgresDB:
             columns: Dict mapping column names to their SQL type definitions
                      (e.g. {"video_id": "VARCHAR(11) PRIMARY KEY NOT NULL"}).
         """
+
+        columns_def = sql.SQL(", ").join(
+            sql.SQL("{col} {dtype}").format(
+                col=sql.Identifier(col), dtype=sql.SQL(dtype)
+            )
+            for col, dtype in columns.items()
+        )
+        with self.get_cursor() as cursor:
+            cursor.execute(
+                sql.SQL(
+                    "CREATE TABLE IF NOT EXISTS {schema}.{table} ({columns});"
+                ).format(
+                    schema=sql.Identifier(schema_name),
+                    table=sql.Identifier(table_name),
+                    columns=columns_def,
+                )
+            )
