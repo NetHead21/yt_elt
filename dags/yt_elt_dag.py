@@ -33,3 +33,6 @@ def yt_elt_dag():
     video_ids = get_video_ids(playlist_id)
     video_stats = get_video_stats(video_ids)
     save(video_stats)
+
+
+yt_elt_dag()
