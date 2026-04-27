@@ -17,3 +17,6 @@ class PostgresDB:
             postgres_conn_id: Airflow connection ID for the PostgreSQL database.
             database: Target database name.
         """
+        self.postgres_conn_id = postgres_conn_id
+        self._hook: PostgresHook | None = None
+        self.database = database
