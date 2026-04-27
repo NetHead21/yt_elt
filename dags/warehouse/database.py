@@ -65,3 +65,15 @@ class PostgresDB:
                     schema=sql.Identifier(schema_name)
                 )
             )
+
+    def create_table(
+        self, table_name: str, schema_name: str, columns: dict[str, str]
+    ) -> None:
+        """Creates a table if it does not already exist.
+
+        Args:
+            table_name: Name of the table to create.
+            schema_name: Schema where the table will be created.
+            columns: Dict mapping column names to their SQL type definitions
+                     (e.g. {"video_id": "VARCHAR(11) PRIMARY KEY NOT NULL"}).
+        """
