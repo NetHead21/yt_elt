@@ -39,3 +39,13 @@ class PostgresDB:
         """Context manager that yields a RealDictCursor, commits on success, rolls back on error."""
         conn = self.get_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        try:
+            yield cursor
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise e
+        finally:
+            cursor.close()
+            conn.close()
