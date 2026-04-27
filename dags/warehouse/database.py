@@ -109,3 +109,19 @@ class PostgresDB:
             data: List of dicts where keys are column names and values are row values.
                   Does nothing if data is empty.
         """
+
+        if not data:
+            return
+
+        columns = data[0].keys()
+        query = sql.SQL(
+            "INSERT INTO {schema}.{table} ({columns}) VALUES ({values});"
+        ).format(
+            schema=sql.Identifier(schema_name),
+            table=sql.Identifier(table_name),
+            columns=sql.SQL(", ").join(map(sql.Identifier, columns)),
+            values=sql.SQL(", ").join(sql.Placeholder(col) for col in columns),
+        )
+
+        with self.get_cursor() as cursor:
+            cursor.executemany(query, data)
