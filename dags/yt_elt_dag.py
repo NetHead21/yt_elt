@@ -14,3 +14,8 @@ def yt_elt_dag():
         channel_handle = Variable.get("CHANNEL_HANDLE")
         channel_id = client.get_channel_id(channel_handle)
         return f"UU{channel_id[2:]}"
+
+    @task
+    def get_video_ids(playlist_id: str) -> list:
+        client = YoutubeClient(api_key=Variable.get("API_KEY"))
+        return client.get_video_ids(playlist_id)
