@@ -28,3 +28,8 @@ def yt_elt_dag():
     @task
     def save(video_stats: list) -> None:
         save_to_json(video_stats)
+
+    playlist_id = get_playlist_id()
+    video_ids = get_video_ids(playlist_id)
+    video_stats = get_video_stats(video_ids)
+    save(video_stats)
