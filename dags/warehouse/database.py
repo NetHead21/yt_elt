@@ -29,3 +29,7 @@ class PostgresDB:
                 postgres_conn_id=self.postgres_conn_id, database=self.database
             )
         return self._hook
+
+    def get_connection(self):
+        """Returns a raw psycopg2 connection from the hook."""
+        return self.hook.get_conn()
