@@ -49,3 +49,19 @@ class PostgresDB:
         finally:
             cursor.close()
             conn.close()
+
+    # ----------------------------------------------------------------------------------------------
+    # DLL methods
+    # ----------------------------------------------------------------------------------------------
+    def create_schema(self, schema_name: str) -> None:
+        """Creates a schema if it does not already exist.
+
+        Args:
+            schema_name: Name of the schema to create.
+        """
+        with self.get_cursor() as cursor:
+            cursor.execute(
+                sql.SQL("CREATE SCHEMA IF NOT EXISTS {schema};").format(
+                    schema=sql.Identifier(schema_name)
+                )
+            )
