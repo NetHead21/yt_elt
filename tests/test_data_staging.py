@@ -90,3 +90,10 @@ class TestSaveToJson:
             save_to_json(SAMPLE_DATA, output_dir=tmp_path)
 
         assert any("successfully saved" in msg for msg in caplog.messages)
+
+    def test_logs_error_on_io_failure(self, tmp_path, caplog):
+        with patch.object(Path, "open", side_effect=IOError("disk full")):
+            with caplog.at_level(logging.ERROR):
+                save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        assert any("Error saving" in msg for msg in caplog.messages)
