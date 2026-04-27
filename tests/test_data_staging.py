@@ -84,3 +84,9 @@ class TestSaveToJson:
 
         expected_file = tmp_path / f"yt_data_{date.today()}.json"
         assert expected_file.exists()
+
+    def test_logs_success(self, tmp_path, caplog):
+        with caplog.at_level(logging.INFO):
+            save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        assert any("successfully saved" in msg for msg in caplog.messages)
