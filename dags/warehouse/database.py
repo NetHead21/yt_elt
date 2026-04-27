@@ -94,3 +94,18 @@ class PostgresDB:
                     columns=columns_def,
                 )
             )
+
+    # ----------------------------------------------------------------------------------------------
+    # CREATE
+    # ----------------------------------------------------------------------------------------------
+    def insert_data(
+        self, schema_name: str, table_name: str, data: list[dict[str, Any]]
+    ) -> None:
+        """Inserts a list of records into a table.
+
+        Args:
+            schema_name: Target schema name.
+            table_name: Target table name.
+            data: List of dicts where keys are column names and values are row values.
+                  Does nothing if data is empty.
+        """
