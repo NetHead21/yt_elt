@@ -78,3 +78,9 @@ class TestSaveToJson:
             result = json.load(f)
 
         assert result[0]["title"] == "日本語タイトル"
+
+    def test_filename_contains_today_date(self, tmp_path):
+        save_to_json(SAMPLE_DATA, output_dir=tmp_path)
+
+        expected_file = tmp_path / f"yt_data_{date.today()}.json"
+        assert expected_file.exists()
