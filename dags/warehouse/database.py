@@ -256,3 +256,60 @@ if __name__ == "__main__":
     #         "comment_count": "INT",
     #     },
     # }
+
+    # core = {
+    #     "schema_name": "core",
+    #     "table_name": "yt_api",
+    #     "columns": {
+    #         "video_id": "VARCHAR(11) PRIMARY KEY NOT NULL",
+    #         "title": "TEXT NOT NULL",
+    #         "published_at": "TIMESTAMP NOT NULL",
+    #         "duration": "TIME NOT NULL",
+    #         "video_type": "VARCHAR(10) NOT NULL",
+    #         "view_count": "INT",
+    #         "like_count": "INT",
+    #         "comment_count": "INT",
+    #     },
+    # }
+
+    # sample_data = [
+    #     {
+    #         "video_id": "abc123",
+    #         "title": "MrBeast Video 1",
+    #         "published_at": "2024-01-01 00:00:00",
+    #         "duration": "PT10M30S",
+    #         "view_count": 1000000,
+    #         "like_count": 50000,
+    #         "comment_count": 3000,
+    #     },
+    #     {
+    #         "video_id": "def456",
+    #         "title": "MrBeast Video 2",
+    #         "published_at": "2024-02-15 00:00:00",
+    #         "duration": "PT8M45S",
+    #         "view_count": 500000,
+    #         "like_count": 25000,
+    #         "comment_count": 1500,
+    #     },
+    # ]
+
+    # db = PostgresDB()
+
+    # db.create_schema(staging["schema_name"])
+    # db.create_table(**staging)
+    # db.insert_data(
+    #     schema_name=staging["schema_name"],
+    #     table_name=staging["table_name"],
+    #     data=sample_data,
+    # )
+
+    # rows = db.fetch_data(
+    #     schema_name=staging["schema_name"],
+    #     table_name=staging["table_name"],
+    # )
+    # for row in rows:
+    #     print(row)
+
+    # db.create_schema(core["schema_name"])
+    # db.create_table(**core)
+    pass
