@@ -55,3 +55,15 @@ def db(mock_conn):
         mock_hook.get_conn.return_value = mock_conn
         mock_hook_cls.return_value = mock_hook
         yield PostgresDB()
+
+
+# ---------------------------------------------------------------------------
+# __init__ / hook
+# ---------------------------------------------------------------------------
+
+
+class TestInit:
+    def test_default_connection_id(self):
+        with patch("dags.warehouse.database.PostgresHook"):
+            db = PostgresDB()
+        assert db.postgres_conn_id == "postgres_db_yt_elt"
