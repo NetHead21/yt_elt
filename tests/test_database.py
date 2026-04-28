@@ -84,3 +84,10 @@ class TestInit:
             mock_hook_cls.assert_not_called()
             _ = db.hook
             mock_hook_cls.assert_called_once()
+
+    def test_hook_is_cached(self):
+        with patch("dags.warehouse.database.PostgresHook") as mock_hook_cls:
+            db = PostgresDB()
+            _ = db.hook
+            _ = db.hook
+            mock_hook_cls.assert_called_once()
