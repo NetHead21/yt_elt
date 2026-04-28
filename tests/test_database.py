@@ -91,3 +91,15 @@ class TestInit:
             _ = db.hook
             _ = db.hook
             mock_hook_cls.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# get_cursor
+# ---------------------------------------------------------------------------
+
+
+class TestGetCursor:
+    def test_commits_on_success(self, db, mock_conn):
+        with db.get_cursor():
+            pass
+        mock_conn.commit.assert_called_once()
