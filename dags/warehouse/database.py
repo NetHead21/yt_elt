@@ -137,3 +137,26 @@ class PostgresDB:
             data: List of dicts where each dict is one row. All dicts must
                 have the same keys.
         """
+
+        if not data:
+            return
+
+        columns = list(data[0].keys())
+
+        insert_sql = sql.SQL(
+            "INSERT INTO {schema}.{table} ({cols}) VALUES ({vals}) ON CONFLICT (video_id) DO UPDATE SET {updates}"
+        ).format(
+            schema=sql.Identifier(schema_name),
+            table=sql.Identifier(table_name),
+            cols=sql.SQL(", ").join(map(sql.Identifier, columns)),
+            vals=sql.SQL(", ").join(sql.Placeholder(col) for col in columns),
+            pk=sql.Identifier("video_id"),
+            updates=sql.SQL(", ").join(
+                sql.SQL("{col} = EXCLUDED.{col}").format(col=sql.Identifier(col))
+                for col in columns
+                if col != "video_id"
+            ),
+        )
+
+        with self.get_cursor() as cursor:
+            cursor.executemany(insert_sql, data)
