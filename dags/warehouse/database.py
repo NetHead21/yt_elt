@@ -212,3 +212,17 @@ class PostgresDB:
                 )
             )
             return cursor.fetchall()
+
+    # ----------------------------------------------------------------------------------------------
+    # DELETE
+    # ----------------------------------------------------------------------------------------------
+    def delete_removed_videos(
+        self, schema_name: str, table_name: str, active_video_ids: list[str]
+    ) -> None:
+        """Deletes rows from the table where video_id is not in the active_video_ids list.
+
+        Args:
+            schema_name: Schema of the target table.
+            table_name: Name of the target table.
+            active_video_ids: List of video IDs that should be retained in the table.
+        """
