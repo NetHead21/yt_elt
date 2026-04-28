@@ -176,3 +176,16 @@ class PostgresDB:
                               Rows not in this list will be deleted. Does nothing
                               if the list is empty.
         """
+        if not active_video_ids:
+            return
+
+        with self.get_cursor() as cursor:
+            cursor.execute(
+                sql.SQL(
+                    "DELETE FROM {schema}.{table} WHERE video_id != ALL(%s);"
+                ).format(
+                    schema=sql.Identifier(schema_name),
+                    table=sql.Identifier(table_name),
+                ),
+                (active_video_ids,),
+            )
