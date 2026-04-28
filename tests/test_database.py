@@ -34,3 +34,8 @@ COLUMNS = {
     "like_count": "INT",
     "comment_count": "INT",
 }
+
+
+@pytest.fixture
+def mock_cursor():
+    return MagicMock()
