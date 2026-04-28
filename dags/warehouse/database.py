@@ -189,3 +189,17 @@ class PostgresDB:
                 ),
                 (active_video_ids,),
             )
+
+    # ----------------------------------------------------------------------------------------------
+    # READ
+    # ----------------------------------------------------------------------------------------------
+    def fetch_data(self, schema_name: str, table_name: str) -> list[dict[str, Any]]:
+        """Fetches all rows from a table as a list of dicts.
+
+        Args:
+            schema_name: Schema of the target table.
+            table_name: Name of the target table.
+
+        Returns:
+            List of dicts where each dict represents a row with column names as keys.
+        """
