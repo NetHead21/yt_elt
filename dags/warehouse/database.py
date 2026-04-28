@@ -240,3 +240,19 @@ class PostgresDB:
                 ),
                 (active_video_ids,),
             )
+
+
+if __name__ == "__main__":
+    # staging = {
+    #     "schema_name": "staging",
+    #     "table_name": "yt_api",
+    #     "columns": {
+    #         "video_id": "VARCHAR(11) PRIMARY KEY NOT NULL",
+    #         "title": "TEXT NOT NULL",
+    #         "published_at": "TIMESTAMP NOT NULL",
+    #         "duration": "VARCHAR(20) NOT NULL",
+    #         "view_count": "INT",
+    #         "like_count": "INT",
+    #         "comment_count": "INT",
+    #     },
+    # }
