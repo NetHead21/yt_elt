@@ -125,3 +125,15 @@ class PostgresDB:
 
         with self.get_cursor() as cursor:
             cursor.executemany(query, data)
+
+    def upsert_data(
+        self, schema_name: str, table_name: str, data: list[dict[str, Any]]
+    ) -> None:
+        """Inserts rows, updating existing ones on primary key conflict.
+
+        Args:
+            schema_name: Target schema name.
+            table_name: Target table name.
+            data: List of dicts where each dict is one row. All dicts must
+                have the same keys.
+        """
