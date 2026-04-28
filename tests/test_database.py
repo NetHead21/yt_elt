@@ -24,3 +24,13 @@ SAMPLE_DATA = [
         "comment_count": 1500,
     },
 ]
+
+COLUMNS = {
+    "video_id": "VARCHAR(11) PRIMARY KEY NOT NULL",
+    "title": "TEXT NOT NULL",
+    "published_at": "TIMESTAMP NOT NULL",
+    "duration": "VARCHAR(20) NOT NULL",
+    "view_count": "INT",
+    "like_count": "INT",
+    "comment_count": "INT",
+}
