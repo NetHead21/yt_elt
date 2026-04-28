@@ -46,3 +46,12 @@ def mock_conn(mock_cursor):
     conn = MagicMock()
     conn.cursor.return_value = mock_cursor
     return conn
+
+
+@pytest.fixture
+def db(mock_conn):
+    with patch("dags.warehouse.database.PostgresHook") as mock_hook_cls:
+        mock_hook = MagicMock()
+        mock_hook.get_conn.return_value = mock_conn
+        mock_hook_cls.return_value = mock_hook
+        yield PostgresDB()
