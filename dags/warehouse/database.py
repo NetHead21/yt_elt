@@ -226,3 +226,17 @@ class PostgresDB:
             table_name: Name of the target table.
             active_video_ids: List of video IDs that should be retained in the table.
         """
+
+        if not active_video_ids:
+            return
+
+        with self.get_cursor() as cursor:
+            cursor.execute(
+                sql.SQL(
+                    "DELETE FROM {schema}.{table} WHERE video_id != ALL(%s);"
+                ).format(
+                    schema=sql.Identifier(schema_name),
+                    table=sql.Identifier(table_name),
+                ),
+                (active_video_ids,),
+            )
