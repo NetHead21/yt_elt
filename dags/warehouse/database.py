@@ -203,3 +203,12 @@ class PostgresDB:
         Returns:
             List of dicts where each dict represents a row with column names as keys.
         """
+
+        with self.get_cursor() as cursor:
+            cursor.execute(
+                sql.SQL("SELECT * FROM {schema}.{table};").format(
+                    schema=sql.Identifier(schema_name),
+                    table=sql.Identifier(table_name),
+                )
+            )
+            return cursor.fetchall()
