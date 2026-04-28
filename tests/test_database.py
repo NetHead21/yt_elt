@@ -77,3 +77,10 @@ class TestInit:
         with patch("dags.warehouse.database.PostgresHook"):
             db = PostgresDB(postgres_conn_id="custom_conn")
         assert db.postgres_conn_id == "custom_conn"
+
+    def test_hook_is_lazy(self):
+        with patch("dags.warehouse.database.PostgresHook") as mock_hook_cls:
+            db = PostgresDB()
+            mock_hook_cls.assert_not_called()
+            _ = db.hook
+            mock_hook_cls.assert_called_once()
