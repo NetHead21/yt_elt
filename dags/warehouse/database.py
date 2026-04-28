@@ -160,3 +160,19 @@ class PostgresDB:
 
         with self.get_cursor() as cursor:
             cursor.executemany(insert_sql, data)
+
+    # ----------------------------------------------------------------------------------------------
+    # DELETE
+    # ----------------------------------------------------------------------------------------------
+    def delete_removed_videos(
+        self, schema_name: str, table_name: str, active_video_ids: list[str]
+    ) -> None:
+        """Deletes rows whose video_id is not in the provided list of active IDs.
+
+        Args:
+            schema_name: Target schema name.
+            table_name: Target table name.
+            active_video_ids: List of video IDs currently active on the channel.
+                              Rows not in this list will be deleted. Does nothing
+                              if the list is empty.
+        """
