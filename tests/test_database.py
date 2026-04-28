@@ -72,3 +72,8 @@ class TestInit:
         with patch("dags.warehouse.database.PostgresHook"):
             db = PostgresDB()
         assert db.database == "elt_db"
+
+    def test_custom_connection_id(self):
+        with patch("dags.warehouse.database.PostgresHook"):
+            db = PostgresDB(postgres_conn_id="custom_conn")
+        assert db.postgres_conn_id == "custom_conn"
