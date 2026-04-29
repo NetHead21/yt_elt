@@ -203,3 +203,14 @@ class TestInsertData:
         executed_sql = str(mock_cursor.executemany.call_args[0][0])
         for col in SAMPLE_DATA[0].keys():
             assert col in executed_sql
+
+
+# ---------------------------------------------------------------------------
+# upsert_data
+# ---------------------------------------------------------------------------
+
+
+class TestUpsertData:
+    def test_executes_upsert(self, db, mock_cursor):
+        db.upsert_data("staging", "yt_api", SAMPLE_DATA)
+        mock_cursor.executemany.assert_called_once()
