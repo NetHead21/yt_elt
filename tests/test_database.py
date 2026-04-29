@@ -122,3 +122,14 @@ class TestGetCursor:
                 raise RuntimeError("error")
         mock_cursor.close.assert_called_once()
         mock_conn.close.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# create_schema
+# ---------------------------------------------------------------------------
+
+
+class TestCreateSchema:
+    def test_executes_create_schema(self, db, mock_cursor):
+        db.create_schema("staging")
+        mock_cursor.execute.assert_called_once()
