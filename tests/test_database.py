@@ -133,3 +133,8 @@ class TestCreateSchema:
     def test_executes_create_schema(self, db, mock_cursor):
         db.create_schema("staging")
         mock_cursor.execute.assert_called_once()
+
+    def test_sql_contains_schema_name(self, db, mock_cursor):
+        db.create_schema("staging")
+        executed_sql = str(mock_cursor.execute.call_args[0][0])
+        assert "staging" in executed_sql
