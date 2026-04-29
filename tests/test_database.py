@@ -182,3 +182,7 @@ class TestInsertData:
     def test_executes_insert(self, db, mock_cursor):
         db.insert_data("staging", "yt_api", SAMPLE_DATA)
         mock_cursor.executemany.assert_called_once()
+
+    def test_skips_on_empty_data(self, db, mock_cursor):
+        db.insert_data("staging", "yt_api", [])
+        mock_cursor.executemany.assert_not_called()
