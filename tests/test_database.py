@@ -197,3 +197,9 @@ class TestInsertData:
         executed_sql = str(mock_cursor.executemany.call_args[0][0])
         assert "staging" in executed_sql
         assert "yt_api" in executed_sql
+
+    def test_sql_contains_all_columns(self, db, mock_cursor):
+        db.insert_data("staging", "yt_api", SAMPLE_DATA)
+        executed_sql = str(mock_cursor.executemany.call_args[0][0])
+        for col in SAMPLE_DATA[0].keys():
+            assert col in executed_sql
