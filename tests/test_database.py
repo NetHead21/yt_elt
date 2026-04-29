@@ -191,3 +191,9 @@ class TestInsertData:
         db.insert_data("staging", "yt_api", SAMPLE_DATA)
         _, called_data = mock_cursor.executemany.call_args[0]
         assert called_data == SAMPLE_DATA
+
+    def test_sql_contains_schema_and_table(self, db, mock_cursor):
+        db.insert_data("staging", "yt_api", SAMPLE_DATA)
+        executed_sql = str(mock_cursor.executemany.call_args[0][0])
+        assert "staging" in executed_sql
+        assert "yt_api" in executed_sql
