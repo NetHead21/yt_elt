@@ -234,3 +234,8 @@ class TestUpsertData:
         db.upsert_data("staging", "yt_api", SAMPLE_DATA)
         executed_sql = str(mock_cursor.executemany.call_args[0][0])
         assert "ON CONFLICT" in executed_sql
+
+    def test_sql_contains_do_update(self, db, mock_cursor):
+        db.upsert_data("staging", "yt_api", SAMPLE_DATA)
+        executed_sql = str(mock_cursor.executemany.call_args[0][0])
+        assert "DO UPDATE SET" in executed_sql
