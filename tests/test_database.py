@@ -143,3 +143,14 @@ class TestCreateSchema:
         db.create_schema("staging")
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "CREATE SCHEMA" in executed_sql
+
+
+# ---------------------------------------------------------------------------
+# create_table
+# ---------------------------------------------------------------------------
+
+
+class TestCreateTable:
+    def test_executes_create_table(self, db, mock_cursor):
+        db.create_table("yt_api", "staging", COLUMNS)
+        mock_cursor.execute.assert_called_once()
