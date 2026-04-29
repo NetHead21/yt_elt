@@ -171,3 +171,14 @@ class TestCreateTable:
         db.create_table("yt_api", "staging", COLUMNS)
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "CREATE TABLE" in executed_sql
+
+
+# ---------------------------------------------------------------------------
+# insert_data
+# ---------------------------------------------------------------------------
+
+
+class TestInsertData:
+    def test_executes_insert(self, db, mock_cursor):
+        db.insert_data("staging", "yt_api", SAMPLE_DATA)
+        mock_cursor.executemany.assert_called_once()
