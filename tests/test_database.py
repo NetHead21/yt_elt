@@ -103,3 +103,9 @@ class TestGetCursor:
         with db.get_cursor():
             pass
         mock_conn.commit.assert_called_once()
+
+    def test_rollback_on_exception(self, db, mock_conn):
+        with pytest.raises(ValueError):
+            with db.get_cursor():
+                raise ValueError("something went wrong")
+        mock_conn.rollback.assert_called_once()
