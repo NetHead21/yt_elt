@@ -115,3 +115,10 @@ class TestGetCursor:
             pass
         mock_cursor.close.assert_called_once()
         mock_conn.close.assert_called_once()
+
+    def test_closes_on_exception(self, db, mock_conn, mock_cursor):
+        with pytest.raises(RuntimeError):
+            with db.get_cursor():
+                raise RuntimeError("error")
+        mock_cursor.close.assert_called_once()
+        mock_conn.close.assert_called_once()
