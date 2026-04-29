@@ -160,3 +160,9 @@ class TestCreateTable:
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "staging" in executed_sql
         assert "yt_api" in executed_sql
+
+    def test_sql_contains_all_columns(self, db, mock_cursor):
+        db.create_table("yt_api", "staging", COLUMNS)
+        executed_sql = str(mock_cursor.execute.call_args[0][0])
+        for col in COLUMNS:
+            assert col in executed_sql
