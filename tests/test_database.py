@@ -109,3 +109,9 @@ class TestGetCursor:
             with db.get_cursor():
                 raise ValueError("something went wrong")
         mock_conn.rollback.assert_called_once()
+
+    def test_closes_cursor_and_connection(self, db, mock_conn, mock_cursor):
+        with db.get_cursor():
+            pass
+        mock_cursor.close.assert_called_once()
+        mock_conn.close.assert_called_once()
