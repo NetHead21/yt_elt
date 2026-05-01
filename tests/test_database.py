@@ -256,3 +256,10 @@ class TestUpsertData:
         executed_sql = str(mock_cursor.executemany.call_args[0][0])
         do_update_part = executed_sql.split("DO UPDATE SET")[1]
         assert '"video_id" = EXCLUDED."video_id"' not in do_update_part
+
+    def test_sql_contains_non_pk_columns_in_update_set(self, db, mock_cursor):
+        db.upsert_data("staging", "yt_api", SAMPLE_DATA)
+        executed_sql = str(mock_cursor.executemany.call_args[0][0])
+        do_update_part = executed_sql.split("DO UPDATE SET")[1]
+        for col in ("title", "view_count", "like_count", "comment_count"):
+            assert col in do_update_part
