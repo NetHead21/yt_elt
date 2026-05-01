@@ -300,3 +300,9 @@ class TestDeleteRemovedVideos:
         db.delete_removed_videos("staging", "yt_api", ["abc123"])
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "!= ALL" in executed_sql
+
+    def test_passes_video_ids_as_parameter(self, db, mock_cursor):
+        active_ids = ["abc123", "def456"]
+        db.delete_removed_videos("staging", "yt_api", active_ids)
+        called_params = mock_cursor.execute.call_args[0][1]
+        assert called_params == (active_ids,)
