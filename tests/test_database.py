@@ -290,3 +290,8 @@ class TestDeleteRemovedVideos:
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "staging" in executed_sql
         assert "yt_api" in executed_sql
+
+    def test_sql_contains_delete(self, db, mock_cursor):
+        db.delete_removed_videos("staging", "yt_api", ["abc123"])
+        executed_sql = str(mock_cursor.execute.call_args[0][0])
+        assert "DELETE FROM" in executed_sql
