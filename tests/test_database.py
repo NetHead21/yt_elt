@@ -306,3 +306,8 @@ class TestDeleteRemovedVideos:
         db.delete_removed_videos("staging", "yt_api", active_ids)
         called_params = mock_cursor.execute.call_args[0][1]
         assert called_params == (active_ids,)
+
+    def test_single_active_id(self, db, mock_cursor):
+        db.delete_removed_videos("staging", "yt_api", ["abc123"])
+        called_params = mock_cursor.execute.call_args[0][1]
+        assert called_params == (["abc123"],)
