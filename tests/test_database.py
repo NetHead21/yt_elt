@@ -263,3 +263,9 @@ class TestUpsertData:
         do_update_part = executed_sql.split("DO UPDATE SET")[1]
         for col in ("title", "view_count", "like_count", "comment_count"):
             assert col in do_update_part
+
+    def test_single_row_data(self, db, mock_cursor):
+        single = [SAMPLE_DATA[0]]
+        db.upsert_data("staging", "yt_api", single)
+        _, called_data = mock_cursor.executemany.call_args[0]
+        assert called_data == single
