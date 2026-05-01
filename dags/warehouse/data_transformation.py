@@ -39,3 +39,19 @@ def parse_duration(duration_str: str) -> timedelta:
         second = int(second)
 
     return timedelta(days=day, hours=hour, minutes=minute, seconds=second)
+
+
+def transform_data(row: dict) -> dict:
+    """Transforms a raw YouTube API row into a cleaned row ready for the core schema.
+
+    Transformations applied:
+    - Converts 'duration' from ISO 8601 string to timedelta.
+    - Derives 'video_type' as 'Short' (≤ 60s) or 'Normal' if not already set.
+    - Casts 'view_count', 'like_count', 'comment_count' from string to int (defaults to 0 if None).
+
+    Args:
+        row: A dict representing a single video record from the staging layer.
+
+    Returns:
+        A new dict with the transformed values — the original row is not mutated.
+    """
