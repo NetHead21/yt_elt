@@ -269,3 +269,14 @@ class TestUpsertData:
         db.upsert_data("staging", "yt_api", single)
         _, called_data = mock_cursor.executemany.call_args[0]
         assert called_data == single
+
+
+# ---------------------------------------------------------------------------
+# delete_removed_videos
+# ---------------------------------------------------------------------------
+
+
+class TestDeleteRemovedVideos:
+    def test_executes_delete(self, db, mock_cursor):
+        db.delete_removed_videos("staging", "yt_api", ["abc123", "def456"])
+        mock_cursor.execute.assert_called_once()
