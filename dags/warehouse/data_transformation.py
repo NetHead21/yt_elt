@@ -14,3 +14,28 @@ def parse_duration(duration_str: str) -> timedelta:
     Returns:
         A timedelta representing the duration.
     """
+
+    if duration_str is None:
+        return timedelta(0)
+
+    duration_str = duration_str.removeprefix("P")
+    day, hour, minute, second = 0, 0, 0, 0
+
+    if "D" in duration_str:
+        day, duration_str = duration_str.split("D")
+        day = int(day)
+        duration_str = duration_str.removeprefix("T")
+    else:
+        duration_str = duration_str.removeprefix("T")
+
+    if "H" in duration_str:
+        hour, duration_str = duration_str.split("H")
+        hour = int(hour)
+    if "M" in duration_str:
+        minute, duration_str = duration_str.split("M")
+        minute = int(minute)
+    if "S" in duration_str:
+        second, _ = duration_str.split("S")
+        second = int(second)
+
+    return timedelta(days=day, hours=hour, minutes=minute, seconds=second)
