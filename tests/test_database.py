@@ -335,3 +335,8 @@ class TestFetchData:
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "staging" in executed_sql
         assert "yt_api" in executed_sql
+
+    def test_returns_empty_list_when_no_data(self, db, mock_cursor):
+        mock_cursor.fetchall.return_value = []
+        result = db.fetch_data("staging", "yt_api")
+        assert result == []
