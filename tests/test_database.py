@@ -280,3 +280,7 @@ class TestDeleteRemovedVideos:
     def test_executes_delete(self, db, mock_cursor):
         db.delete_removed_videos("staging", "yt_api", ["abc123", "def456"])
         mock_cursor.execute.assert_called_once()
+
+    def test_skips_on_empty_list(self, db, mock_cursor):
+        db.delete_removed_videos("staging", "yt_api", [])
+        mock_cursor.execute.assert_not_called()
