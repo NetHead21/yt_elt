@@ -311,3 +311,15 @@ class TestDeleteRemovedVideos:
         db.delete_removed_videos("staging", "yt_api", ["abc123"])
         called_params = mock_cursor.execute.call_args[0][1]
         assert called_params == (["abc123"],)
+
+
+# ---------------------------------------------------------------------------
+# fetch_data
+# ---------------------------------------------------------------------------
+
+
+class TestFetchData:
+    def test_returns_cursor_results(self, db, mock_cursor):
+        mock_cursor.fetchall.return_value = SAMPLE_DATA
+        result = db.fetch_data("staging", "yt_api")
+        assert result == SAMPLE_DATA
