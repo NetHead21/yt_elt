@@ -55,3 +55,22 @@ def transform_data(row: dict) -> dict:
     Returns:
         A new dict with the transformed values — the original row is not mutated.
     """
+
+    transformed_row = row.copy()
+    if "duration" in transformed_row:
+        transformed_row["duration"] = parse_duration(transformed_row["duration"])
+
+    if transformed_row.get("video_type") is None and "duration" in transformed_row:
+        transformed_row["video_type"] = (
+            "Short"
+            if transformed_row["duration"] <= timedelta(seconds=60)
+            else "Normal"
+        )
+
+    for field in ("view_count", "like_count", "comment_count"):
+        if field in transformed_row:
+            transformed_row[field] = (
+                int(transformed_row[field]) if transformed_row[field] is not None else 0
+            )
+
+    return transformed_row
