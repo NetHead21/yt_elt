@@ -295,3 +295,8 @@ class TestDeleteRemovedVideos:
         db.delete_removed_videos("staging", "yt_api", ["abc123"])
         executed_sql = str(mock_cursor.execute.call_args[0][0])
         assert "DELETE FROM" in executed_sql
+
+    def test_sql_contains_not_all(self, db, mock_cursor):
+        db.delete_removed_videos("staging", "yt_api", ["abc123"])
+        executed_sql = str(mock_cursor.execute.call_args[0][0])
+        assert "!= ALL" in executed_sql
