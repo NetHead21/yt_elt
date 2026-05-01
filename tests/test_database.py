@@ -323,3 +323,8 @@ class TestFetchData:
         mock_cursor.fetchall.return_value = SAMPLE_DATA
         result = db.fetch_data("staging", "yt_api")
         assert result == SAMPLE_DATA
+
+    def test_executes_select(self, db, mock_cursor):
+        mock_cursor.fetchall.return_value = []
+        db.fetch_data("staging", "yt_api")
+        mock_cursor.execute.assert_called_once()
