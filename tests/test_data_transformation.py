@@ -44,3 +44,6 @@ class TestParseDuration:
 
     def test_returns_timedelta_zero_for_none(self):
         assert parse_duration(None) == timedelta(0)
+
+    def test_exactly_60_seconds(self):
+        assert parse_duration("PT60S") == timedelta(seconds=60)
