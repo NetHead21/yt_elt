@@ -89,3 +89,13 @@ if __name__ == "__main__":
 
     for dur in test_durations:
         print(f"{dur} -> {parse_duration(dur)}")
+
+    test_row = {
+        "video_id": "6W_841xoprg",
+        "title": "Can a Window Stop a Wrecking Ball?",
+        "published_at": "2026-04-14T16:00:01Z",
+        "duration": "PT30S",
+        "view_count": "48445009",
+        "like_count": "1160445",
+        "comment_count": "9400",
+    }
