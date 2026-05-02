@@ -74,3 +74,15 @@ def transform_data(row: dict) -> dict:
             )
 
     return transformed_row
+
+
+if __name__ == "__main__":
+    test_durations = [
+        "PT15M33S",
+        "PT2H45M",
+        "PT1H30S",
+        "PT20M",
+        "PT45S",
+        "PT3H",
+        "PT1D2H30M15S",
+    ]
