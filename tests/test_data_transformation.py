@@ -76,3 +76,8 @@ class TestTransformData:
         row = {**SAMPLE_ROW, "duration": "PT30S"}
         result = transform_data(row)
         assert result["video_type"] == "Short"
+
+    def test_classifies_exactly_60s_as_short(self):
+        row = {**SAMPLE_ROW, "duration": "PT60S"}
+        result = transform_data(row)
+        assert result["video_type"] == "Short"
