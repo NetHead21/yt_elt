@@ -30,3 +30,6 @@ class TestParseDuration:
 
     def test_seconds_only(self):
         assert parse_duration("PT45S") == timedelta(seconds=45)
+
+    def test_hours_and_minutes(self):
+        assert parse_duration("PT2H45M") == timedelta(hours=2, minutes=45)
