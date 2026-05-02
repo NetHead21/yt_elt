@@ -41,3 +41,6 @@ class TestParseDuration:
         assert parse_duration("PT1D2H30M15S") == timedelta(
             days=1, hours=2, minutes=30, seconds=15
         )
+
+    def test_returns_timedelta_zero_for_none(self):
+        assert parse_duration(None) == timedelta(0)
