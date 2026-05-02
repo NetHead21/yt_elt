@@ -54,3 +54,15 @@ class TestParseDuration:
     def test_returns_timedelta_type(self):
         result = parse_duration("PT5M")
         assert isinstance(result, timedelta)
+
+
+# ---------------------------------------------------------------------------
+# transform_data
+# ---------------------------------------------------------------------------
+
+
+class TestTransformData:
+    def test_does_not_mutate_original_row(self):
+        original = SAMPLE_ROW.copy()
+        transform_data(SAMPLE_ROW)
+        assert SAMPLE_ROW == original
