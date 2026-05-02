@@ -71,3 +71,8 @@ class TestTransformData:
         result = transform_data(SAMPLE_ROW)
         assert isinstance(result["duration"], timedelta)
         assert result["duration"] == timedelta(minutes=10, seconds=30)
+
+    def test_classifies_short_video(self):
+        row = {**SAMPLE_ROW, "duration": "PT30S"}
+        result = transform_data(row)
+        assert result["video_type"] == "Short"
