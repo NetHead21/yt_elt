@@ -66,3 +66,8 @@ class TestTransformData:
         original = SAMPLE_ROW.copy()
         transform_data(SAMPLE_ROW)
         assert SAMPLE_ROW == original
+
+    def test_converts_duration_to_timedelta(self):
+        result = transform_data(SAMPLE_ROW)
+        assert isinstance(result["duration"], timedelta)
+        assert result["duration"] == timedelta(minutes=10, seconds=30)
