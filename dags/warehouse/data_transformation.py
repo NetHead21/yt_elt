@@ -86,3 +86,6 @@ if __name__ == "__main__":
         "PT3H",
         "PT1D2H30M15S",
     ]
+
+    for dur in test_durations:
+        print(f"{dur} -> {parse_duration(dur)}")
