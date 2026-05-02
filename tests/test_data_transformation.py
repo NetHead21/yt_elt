@@ -21,3 +21,6 @@ SAMPLE_ROW = {
 class TestParseDuration:
     def test_minutes_and_seconds(self):
         assert parse_duration("PT10M30S") == timedelta(minutes=10, seconds=30)
+
+    def test_hours_only(self):
+        assert parse_duration("PT3H") == timedelta(hours=3)
