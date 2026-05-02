@@ -99,3 +99,6 @@ if __name__ == "__main__":
         "like_count": "1160445",
         "comment_count": "9400",
     }
+
+    transformed = transform_data(test_row)
+    print(transformed)
