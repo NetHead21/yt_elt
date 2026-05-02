@@ -50,3 +50,7 @@ class TestParseDuration:
 
     def test_exactly_60_minutes(self):
         assert parse_duration("PT60M") == timedelta(minutes=60)
+
+    def test_returns_timedelta_type(self):
+        result = parse_duration("PT5M")
+        assert isinstance(result, timedelta)
