@@ -81,3 +81,8 @@ class TestTransformData:
         row = {**SAMPLE_ROW, "duration": "PT60S"}
         result = transform_data(row)
         assert result["video_type"] == "Short"
+
+    def test_classifies_normal_video(self):
+        row = {**SAMPLE_ROW, "duration": "PT10M30S"}
+        result = transform_data(row)
+        assert result["video_type"] == "Normal"
