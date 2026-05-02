@@ -12,3 +12,12 @@ SAMPLE_ROW = {
     "like_count": "50000",
     "comment_count": "3000",
 }
+
+# ---------------------------------------------------------------------------
+# parse_duration
+# ---------------------------------------------------------------------------
+
+
+class TestParseDuration:
+    def test_minutes_and_seconds(self):
+        assert parse_duration("PT10M30S") == timedelta(minutes=10, seconds=30)
