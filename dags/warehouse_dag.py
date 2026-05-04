@@ -71,3 +71,13 @@ def warehouse_dag():
             table_name="yt_api",
             data=extracted_data,
         )
+
+    @task
+    def delete_removed_videos(extracted_data: list) -> None:
+        db = PostgresDB()
+        extracted_video_ids = [item["video_id"] for item in extracted_data]
+        db.delete_removed_videos(
+            schema_name="staging",
+            table_name="yt_api",
+            active_video_ids=extracted_video_ids,
+        )
