@@ -7,3 +7,17 @@ from airflow.sensors.external_task import ExternalTaskSensor
 from warehouse.database import PostgresDB
 from warehouse.data_transformation import transform_data
 from warehouse.data_loading import load_from_json
+
+STAGING_TABLE = {
+    "schema_name": "staging",
+    "table_name": "yt_api",
+    "columns": {
+        "video_id": "VARCHAR(11) PRIMARY KEY NOT NULL",
+        "title": "TEXT NOT NULL",
+        "published_at": "TIMESTAMP NOT NULL",
+        "duration": "VARCHAR(20) NOT NULL",
+        "view_count": "INT",
+        "like_count": "INT",
+        "comment_count": "INT",
+    },
+}
