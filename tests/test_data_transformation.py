@@ -91,3 +91,8 @@ class TestTransformData:
         row = {**SAMPLE_ROW, "duration": "PT2H"}
         result = transform_data(row)
         assert result["video_type"] == "Normal"
+
+    def test_does_not_override_existing_video_type(self):
+        row = {**SAMPLE_ROW, "video_type": "Custom"}
+        result = transform_data(row)
+        assert result["video_type"] == "Custom"
