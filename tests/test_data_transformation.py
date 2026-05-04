@@ -96,3 +96,8 @@ class TestTransformData:
         row = {**SAMPLE_ROW, "video_type": "Custom"}
         result = transform_data(row)
         assert result["video_type"] == "Custom"
+
+    def test_casts_view_count_to_int(self):
+        result = transform_data(SAMPLE_ROW)
+        assert result["view_count"] == 1000000
+        assert isinstance(result["view_count"], int)
