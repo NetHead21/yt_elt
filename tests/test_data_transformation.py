@@ -128,3 +128,9 @@ class TestTransformData:
         row = {k: v for k, v in SAMPLE_ROW.items() if k != "duration"}
         result = transform_data(row)
         assert "duration" not in result
+
+    def test_preserves_other_fields(self):
+        result = transform_data(SAMPLE_ROW)
+        assert result["video_id"] == SAMPLE_ROW["video_id"]
+        assert result["title"] == SAMPLE_ROW["title"]
+        assert result["published_at"] == SAMPLE_ROW["published_at"]
