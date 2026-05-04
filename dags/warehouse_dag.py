@@ -62,3 +62,12 @@ def warehouse_dag():
     def extract_data():
         file_name = Path("data") / f"yt_data_{date.today()}.json"
         return load_from_json(file_name)
+
+    @task
+    def load_data_to_staging(extracted_data: list):
+        db = PostgresDB()
+        db.upsert_data(
+            schema_name="staging",
+            table_name="yt_api",
+            data=extracted_data,
+        )
