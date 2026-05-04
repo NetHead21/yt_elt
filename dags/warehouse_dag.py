@@ -57,3 +57,8 @@ def warehouse_dag():
 
         db.create_schema(CORE_TABLE["schema_name"])
         db.create_table(**CORE_TABLE)
+
+    @task
+    def extract_data():
+        file_name = Path("data") / f"yt_data_{date.today()}.json"
+        return load_from_json(file_name)
