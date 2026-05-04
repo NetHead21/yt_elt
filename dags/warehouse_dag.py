@@ -103,3 +103,6 @@ def warehouse_dag():
     core = load_data_to_core()
     load_data_to_staging(extracted_data) >> core
     delete_removed_videos(extracted_data) >> core
+
+
+warehouse_dag()
