@@ -47,3 +47,13 @@ def warehouse_dag():
         mode="reschedule",  # frees up a worker slot while waiting
         timeout=3600,  # fails after 1 hour if not done
     )
+
+    @task
+    def setup_database_tables():
+        db = PostgresDB()
+
+        db.create_schema(STAGING_TABLE["schema_name"])
+        db.create_table(**STAGING_TABLE)
+
+        db.create_schema(CORE_TABLE["schema_name"])
+        db.create_table(**CORE_TABLE)
