@@ -81,3 +81,11 @@ def warehouse_dag():
             table_name="yt_api",
             active_video_ids=extracted_video_ids,
         )
+
+    @task
+    def load_data_to_core():
+        db = PostgresDB()
+        staging_data = db.fetch_data(
+            schema_name="staging",
+            table_name="yt_api",
+        )
