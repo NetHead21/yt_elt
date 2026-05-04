@@ -101,3 +101,13 @@ class TestTransformData:
         result = transform_data(SAMPLE_ROW)
         assert result["view_count"] == 1000000
         assert isinstance(result["view_count"], int)
+
+    def test_casts_like_count_to_int(self):
+        result = transform_data(SAMPLE_ROW)
+        assert result["like_count"] == 50000
+        assert isinstance(result["like_count"], int)
+
+    def test_casts_comment_count_to_int(self):
+        result = transform_data(SAMPLE_ROW)
+        assert result["comment_count"] == 3000
+        assert isinstance(result["comment_count"], int)
