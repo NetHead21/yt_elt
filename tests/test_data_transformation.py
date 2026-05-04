@@ -123,3 +123,8 @@ class TestTransformData:
         assert result["view_count"] == 0
         assert result["like_count"] == 0
         assert result["comment_count"] == 0
+
+    def test_handles_missing_duration(self):
+        row = {k: v for k, v in SAMPLE_ROW.items() if k != "duration"}
+        result = transform_data(row)
+        assert "duration" not in result
