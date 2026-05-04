@@ -111,3 +111,15 @@ class TestTransformData:
         result = transform_data(SAMPLE_ROW)
         assert result["comment_count"] == 3000
         assert isinstance(result["comment_count"], int)
+
+    def test_defaults_none_counts_to_zero(self):
+        row = {
+            **SAMPLE_ROW,
+            "view_count": None,
+            "like_count": None,
+            "comment_count": None,
+        }
+        result = transform_data(row)
+        assert result["view_count"] == 0
+        assert result["like_count"] == 0
+        assert result["comment_count"] == 0
