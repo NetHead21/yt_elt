@@ -89,3 +89,10 @@ def warehouse_dag():
             schema_name="staging",
             table_name="yt_api",
         )
+
+        transformed = [transform_data(record) for record in staging_data]
+        db.upsert_data(
+            schema_name="core",
+            table_name="yt_api",
+            data=transformed,
+        )
