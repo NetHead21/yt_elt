@@ -36,3 +36,14 @@ CORE_TABLE = {
         "comment_count": "INT",
     },
 }
+
+
+@dag(schedule="@daily", start_date=datetime(2026, 1, 1), catchup=False)
+def warehouse_dag():
+    wait_for_yt_elt = ExternalTaskSensor(
+        task_id="wait_for_yt_elt",
+        external_dag_id="yt_elt_dag",
+        external_task_id="save",  # the last task in yt_elt_dag
+        mode="reschedule",  # frees up a worker slot while waiting
+        timeout=3600,  # fails after 1 hour if not done
+    )
