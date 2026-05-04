@@ -96,3 +96,10 @@ def warehouse_dag():
             table_name="yt_api",
             data=transformed,
         )
+
+    setup = setup_database_tables()
+    extracted_data = extract_data()
+    wait_for_yt_elt >> setup >> extracted_data
+    core = load_data_to_core()
+    load_data_to_staging(extracted_data) >> core
+    delete_removed_videos(extracted_data) >> core
