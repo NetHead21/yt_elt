@@ -1,0 +1,34 @@
+checks for yt_api:
+  # Primary key checks
+  - missing_count(video_id) = 0
+  - duplicate_count(video_id) = 0
+
+  # Completeness checks
+  - missing_count(title) = 0
+  - missing_count(published_at) = 0
+  - missing_count(video_type) = 0
+
+  # Validity checks
+  - invalid_count(video_type) = 0:
+      valid values: [Short, Normal]
+  - min(view_count) >= 0
+  - min(like_count) >= 0
+  - min(comment_count) >= 0
+
+  # Row count sanity
+  - row_count > 0
+
+  # Custom row checks
+  - failed rows:
+      name: "Check for like count greater than video views"
+      fail query: |
+        SELECT *
+        FROM core.yt_api
+        WHERE like_count > view_count
+
+  - failed rows:
+      name: "Check for comment count greater than video views"
+      fail query: |
+        SELECT *
+        FROM core.yt_api
+        WHERE comment_count > view_count
